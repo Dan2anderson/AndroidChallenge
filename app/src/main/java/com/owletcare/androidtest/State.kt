@@ -12,4 +12,4 @@ data class State(
     val users: ArrayList<User>
 )
 
-data class User(val name: String, val profilePicture: String)
+data class User(val name: String, val profilePicture: String, val id: Int)

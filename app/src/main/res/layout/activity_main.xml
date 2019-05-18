@@ -7,13 +7,20 @@
         android:layout_height="match_parent"
         tools:context=".MainActivity">
 
+    <!--
+    In a constraintView if the layout width/height is 0dp then wee need both a start and end, as well as a  top and bottom constraint respectively
+    so that the View knows what area it needs to fill.
+    -->
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/mainRecyclerView"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/addUserButton"
+            />
 
     <Button
             android:id="@+id/addUserButton"

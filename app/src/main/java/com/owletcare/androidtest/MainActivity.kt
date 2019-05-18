@@ -28,7 +28,17 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         addUserButton.setOnClickListener {
-            store.dispatch(UsersAction.AddUser(randomName, randomProfilePicture))
+            /**
+             * By default data class's compare by structure.  Given that in this program users are generated with a random combination of
+             * 5 names and 5 images,  it is practically guaranteed that we will get users who are identical when compared by structure.
+             * originally I though I would override User.equals() to check equality by reference, but then I was not sure how to override HashCode
+             * in such a way that it would unique if between to User instance with the same data.
+             *
+             * So I settled on adding a randomId up to 10,000.  This should make sure all User instances are unique.
+             *
+             * This solves a bug were occasionally (1 or 2 out of 10 )  when the add (or delete) user button was clicked no user was added or deleted.
+             */
+            store.dispatch(UsersAction.AddUser(randomName, randomProfilePicture, randomId))
         }
         mainRecyclerView.adapter = UserRecyclerAdapter(store)
     }
@@ -50,4 +60,7 @@ class MainActivity : AppCompatActivity() {
             3 -> "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"
             else -> "https://vignette.wikia.nocookie.net/jamescameronsavatar/images/e/e6/Humansully.jpg/revision/latest?cb=20140829010952"
         }
+
+    private val randomId: Int
+        get() = Random.nextInt(10000)
 }
